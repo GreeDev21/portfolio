@@ -5,48 +5,81 @@
 	<h2 data-i18n="cta.heading">Interested in working together?</h2>
 
 	<contact-form>
-		<form id="contact-form" novalidate>
-			<div class="form-field">
-				<label for="name" data-i18n="contact.name">Name</label>
-				<input type="text" id="name" name="name" required maxlength="100" />
-			</div>
+		<button class="cta-btn" data-i18n="cta.button">Send Me a Message</button>
 
-			<div class="form-field">
-				<label for="email" data-i18n="contact.email">Email</label>
-				<input type="email" id="email" name="email" required maxlength="200" />
-			</div>
+		<dialog id="contact-dialog">
+			<form id="contact-form" novalidate>
+				<div class="dialog-header">
+					<h3 data-i18n="cta.heading">Let's work together</h3>
+					<button type="button" class="close-btn" aria-label="Close">&times;</button>
+				</div>
 
-			<div class="form-field">
-				<label for="message" data-i18n="contact.message">Message</label>
-				<textarea id="message" name="message" required maxlength="5000" rows="5"></textarea>
-			</div>
+				<div class="form-field">
+					<label for="name" data-i18n="contact.name">Name</label>
+					<input type="text" id="name" name="name" required maxlength="100" />
+				</div>
 
-			<button type="submit" class="submit-btn">
-				<span class="btn-text" data-i18n="contact.send">Send Message</span>
-				<span class="btn-sending" hidden data-i18n="contact.sending">Sending...</span>
-			</button>
+				<div class="form-field">
+					<label for="email" data-i18n="contact.email">Email</label>
+					<input type="email" id="email" name="email" required maxlength="200" />
+				</div>
 
-			<p class="form-feedback success" hidden data-i18n="contact.success">Message sent! I'll get back to you soon.</p>
-			<p class="form-feedback error" hidden data-i18n="contact.error">Something went wrong. Please try again.</p>
-		</form>
+				<div class="form-field">
+					<label for="message" data-i18n="contact.message">Message</label>
+					<textarea id="message" name="message" required maxlength="5000" rows="5"></textarea>
+				</div>
+
+				<button type="submit" class="submit-btn">
+					<span class="btn-text" data-i18n="contact.send">Send Message</span>
+					<span class="btn-sending" hidden data-i18n="contact.sending">Sending...</span>
+				</button>
+
+				<p class="form-feedback success" hidden data-i18n="contact.success">Message sent! I'll get back to you soon.</p>
+				<p class="form-feedback error" hidden data-i18n="contact.error">Something went wrong. Please try again.</p>
+			</form>
+		</dialog>
 	</contact-form>
 </aside>
 
 <script>
 	class ContactForm extends HTMLElement {
 		connectedCallback() {
-			const form = this.querySelector('form')!;
-			const button = form.querySelector('.submit-btn') as HTMLButtonElement;
+			const ctaBtn = this.querySelector('.cta-btn') as HTMLButtonElement;
+			const dialog = this.querySelector('dialog')!;
+			const form = dialog.querySelector('form')!;
+			const closeBtn = dialog.querySelector('.close-btn') as HTMLButtonElement;
+			const submitBtn = form.querySelector('.submit-btn') as HTMLButtonElement;
 			const btnText = form.querySelector('.btn-text') as HTMLElement;
 			const btnSending = form.querySelector('.btn-sending') as HTMLElement;
 			const feedbackSuccess = form.querySelector('.form-feedback.success') as HTMLElement;
 			const feedbackError = form.querySelector('.form-feedback.error') as HTMLElement;
 
+			// Open modal
+			ctaBtn.addEventListener('click', () => {
+				feedbackSuccess.hidden = true;
+				feedbackError.hidden = true;
+				dialog.showModal();
+			});
+
+			// Close modal
+			closeBtn.addEventListener('click', () => dialog.close());
+
+			// Close on backdrop click
+			dialog.addEventListener('click', (e) => {
+				if (e.target === dialog) dialog.close();
+			});
+
+			// Close on Escape (built-in, but reset feedback)
+			dialog.addEventListener('close', () => {
+				feedbackSuccess.hidden = true;
+				feedbackError.hidden = true;
+			});
+
+			// Form submission
 			form.addEventListener('submit', async (e) => {
 				e.preventDefault();
 
-				// Disable form
-				button.disabled = true;
+				submitBtn.disabled = true;
 				btnText.hidden = true;
 				btnSending.hidden = false;
 				feedbackSuccess.hidden = true;
@@ -74,7 +107,7 @@
 					feedbackSuccess.hidden = true;
 					feedbackError.hidden = false;
 				} finally {
-					button.disabled = false;
+					submitBtn.disabled = false;
 					btnText.hidden = false;
 					btnSending.hidden = true;
 				}
@@ -103,13 +136,81 @@
 		max-width: 15ch;
 	}
 
-	form {
-		width: 100%;
-		max-width: 32rem;
-		display: grid;
-		gap: 1.25rem;
+	/* ---- CTA Button ---- */
+	.cta-btn {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.85rem 2rem;
+		border: none;
+		border-radius: 999rem;
+		background: var(--accent-regular);
+		color: var(--accent-text-over);
+		font-family: var(--font-brand);
+		font-size: var(--text-base);
+		font-weight: 600;
+		cursor: pointer;
+		transition: opacity var(--theme-transition), transform var(--theme-transition);
 	}
 
+	.cta-btn:hover {
+		opacity: 0.85;
+		transform: translateY(-1px);
+	}
+
+	/* ---- Dialog / Modal ---- */
+	dialog {
+		padding: 0;
+		border: 1px solid var(--gray-800);
+		border-radius: 1.25rem;
+		background: var(--gray-999);
+		color: var(--gray-100);
+		width: min(90vw, 30rem);
+		max-height: 85vh;
+		overflow-y: auto;
+		box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+	}
+
+	dialog::backdrop {
+		background: rgba(0, 0, 0, 0.65);
+		backdrop-filter: blur(4px);
+	}
+
+	/* ---- Dialog Form ---- */
+	dialog form {
+		display: grid;
+		gap: 1.25rem;
+		padding: 2rem;
+	}
+
+	.dialog-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.dialog-header h3 {
+		font-size: var(--text-lg);
+		margin: 0;
+	}
+
+	.close-btn {
+		background: none;
+		border: none;
+		color: var(--gray-400);
+		font-size: 1.5rem;
+		line-height: 1;
+		cursor: pointer;
+		padding: 0.25rem;
+		border-radius: 0.5rem;
+		transition: color var(--theme-transition), background var(--theme-transition);
+	}
+
+	.close-btn:hover {
+		color: var(--gray-100);
+		background: var(--gray-800);
+	}
+
+	/* ---- Form Fields ---- */
 	.form-field {
 		display: grid;
 		gap: 0.4rem;
@@ -144,6 +245,7 @@
 		min-height: 6rem;
 	}
 
+	/* ---- Submit Button ---- */
 	.submit-btn {
 		justify-self: start;
 		display: inline-flex;
@@ -170,6 +272,7 @@
 		opacity: 0.6;
 	}
 
+	/* ---- Feedback ---- */
 	.form-feedback {
 		font-size: var(--text-sm);
 		margin: 0;
@@ -183,6 +286,7 @@
 		color: #e5484d;
 	}
 
+	/* ---- Responsive ---- */
 	@media (min-width: 50em) {
 		aside {
 			padding: 5rem 7.5rem;
