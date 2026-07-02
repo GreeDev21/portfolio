@@ -13,7 +13,7 @@ export const translations: Record<string, Record<string, string>> = {
 		'hero.pill.writer': 'UX',
 		'skills.heading.1': 'Frontend Architecture',
 		'skills.desc.1':
-			'Building scalable, maintainable interfaces with Angular, React, and Astro.',
+			'Building scalable, maintainable interfaces with React and Astro.',
 		'skills.heading.2': 'UI/UX Design',
 		'skills.desc.2':
 			'Crafting intuitive, accessible experiences that users love.',
@@ -33,13 +33,13 @@ export const translations: Record<string, Record<string, string>> = {
 		'about.bg.p1':
 			"I'm a frontend designer & developer who loves turning complex ideas into clean, intuitive interfaces. I work at the intersection of design and code — where pixels meet logic and user experience drives every decision.",
 		'about.bg.p2':
-			'I specialize in building responsive, accessible web applications with modern frameworks like Angular and React. My workflow blends UI/UX design principles with solid frontend architecture: component libraries, state management, and performance optimization.',
+			'I specialize in building responsive, accessible web applications with modern frameworks like React. My workflow blends UI/UX design principles with solid frontend architecture: component libraries, state management, and performance optimization.',
 		'about.bg.p3':
 			'I am currently studying Systems Analysis, which gives me a strong foundation in algorithmic thinking and software engineering. When I am not coding, you will find me exploring new design trends, contributing to open source, or developing my million-dollar ideas.',
 		'about.edu.title': 'Education',
 		'about.edu.p1': 'Systems Analysis',
 		'about.skills.title': 'Skills',
-		'about.skills.p1': 'TypeScript · Angular · React · Astro · Node.js · Clean Architecture · TDD · SDD · UI/UX Design · Figma · Responsive Design · Accessibility · State Management',
+		'about.skills.p1': 'TypeScript · React · Astro · Node.js · Clean Architecture · TDD · SDD · UI/UX Design · Figma · Responsive Design · Accessibility · State Management',
 		'footer.copyright': '© {year} Agustín Burgos',
 		'cta.heading': 'Interested in working together?',
 		'cta.button': 'Send Me a Message',
@@ -84,7 +84,7 @@ export const translations: Record<string, Record<string, string>> = {
 		'hero.pill.writer': 'UX',
 		'skills.heading.1': 'Arquitectura Frontend',
 		'skills.desc.1':
-			'Construyendo interfaces escalables y mantenibles con Angular, React y Astro.',
+			'Construyendo interfaces escalables y mantenibles con React y Astro.',
 		'skills.heading.2': 'Diseño UI/UX',
 		'skills.desc.2':
 			'Creando experiencias intuitivas y accesibles que los usuarios amen.',
@@ -104,13 +104,13 @@ export const translations: Record<string, Record<string, string>> = {
 		'about.bg.p1':
 			'Soy diseñador & desarrollador frontend apasionado por convertir ideas complejas en interfaces limpias e intuitivas. Trabajo en la intersección entre el diseño y el código — donde los píxeles se encuentran con la lógica y la experiencia de usuario guía cada decisión.',
 		'about.bg.p2':
-			'Me especializo en construir aplicaciones web responsivas y accesibles con frameworks modernos como Angular y React. Mi flujo de trabajo fusiona principios de diseño UI/UX con arquitectura frontend sólida: librerías de componentes, manejo de estado y optimización de rendimiento.',
+			'Me especializo en construir aplicaciones web responsivas y accesibles con frameworks modernos como React. Mi flujo de trabajo fusiona principios de diseño UI/UX con arquitectura frontend sólida: librerías de componentes, manejo de estado y optimización de rendimiento.',
 		'about.bg.p3':
 			'Actualmente estudio Análisis de Sistemas, lo que me da una base sólida en pensamiento algorítmico e ingeniería de software. Cuando no estoy codeando, me vas a encontrar explorando nuevas tendencias de diseño, contribuyendo a open source o desarrollando mis ideas millonarias.',
 		'about.edu.title': 'Educación',
 		'about.edu.p1': 'Análisis de Sistemas',
 		'about.skills.title': 'Habilidades',
-		'about.skills.p1': 'TypeScript · Angular · React · Astro · Node.js · Clean Architecture · TDD · SDD · UI/UX Design · Figma · Diseño Responsive · Accesibilidad · Manejo de Estado',
+		'about.skills.p1': 'TypeScript · React · Astro · Node.js · Clean Architecture · TDD · SDD · UI/UX Design · Figma · Diseño Responsive · Accesibilidad · Manejo de Estado',
 		'footer.copyright': '© {year} Agustín Burgos',
 		'cta.heading': '¿Interesado en trabajar juntos?',
 		'cta.button': 'Enviame un Mensaje',
