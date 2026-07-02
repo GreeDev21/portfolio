@@ -114,6 +114,15 @@ export const translations: Record<string, Record<string, string>> = {
 		'footer.copyright': '© {year} Agustín Burgos',
 		'cta.heading': '¿Interesado en trabajar juntos?',
 		'cta.button': 'Enviame un Mensaje',
+
+		'contact.name': 'Nombre',
+		'contact.email': 'Correo',
+		'contact.message': 'Mensaje',
+		'contact.send': 'Enviar Mensaje',
+		'contact.sending': 'Enviando...',
+		'contact.success': '¡Mensaje enviado!',
+		'contact.error': 'Algo salió mal. Intentá de nuevo.',
+
 		'lang.en': 'English',
 		'lang.es': 'Español',
 
