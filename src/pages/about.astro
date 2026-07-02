@@ -1,0 +1,118 @@
+---
+import ContactCTA from '../components/ContactCTA.astro';
+import Hero from '../components/Hero.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About | GreeDev" description="About GreeDev's background and skills">
+	<div class="stack gap-20">
+		<main class="wrapper about">
+			<Hero
+				title="About"
+				tagline="Thanks for stopping by. Read below to learn more about me."
+				i18nTitle="about.title"
+				i18nTagline="about.tagline"
+			>
+				<img
+					width="1553"
+					height="873"
+					src="/assets/at-work.jpg"
+					alt="GreeDev at work with a colleague"
+				/>
+			</Hero>
+
+			<section>
+				<h2 class="section-title" data-i18n="about.bg.title">Background</h2>
+				<div class="content">
+					<p data-i18n="about.bg.p1">
+						I am a passionate software developer with experience building modern web applications. I
+						specialize in frontend architecture, state management, and clean code principles.
+					</p>
+					<p data-i18n="about.bg.p2">
+						I believe in writing code that is not only functional but also maintainable and scalable.
+						My approach is rooted in SOLID principles, hexagonal architecture, and a deep
+						understanding of the tools I use.
+					</p>
+					<p data-i18n="about.bg.p3">
+						When I am not coding, I enjoy teaching, speaking at events, and contributing to the
+						developer community.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h2 class="section-title" data-i18n="about.edu.title">Education</h2>
+				<div class="content">
+					<p data-i18n="about.edu.p1">Computer Science student at Universidad de Buenos Aires.</p>
+				</div>
+			</section>
+			<section>
+				<h2 class="section-title" data-i18n="about.skills.title">Skills</h2>
+				<div class="content">
+					<p data-i18n="about.skills.p1">
+						TypeScript, Angular, React, Astro, Node.js, Clean Architecture, TDD, and more.
+					</p>
+				</div>
+			</section>
+		</main>
+
+		<ContactCTA />
+	</div>
+</BaseLayout>
+
+<style>
+	.about {
+		display: flex;
+		flex-direction: column;
+		gap: 3.5rem;
+	}
+
+	img {
+		margin-top: 1.5rem;
+		border-radius: 1.5rem;
+		box-shadow: var(--shadow-md);
+	}
+
+	section {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		color: var(--gray-200);
+	}
+
+	.section-title {
+		grid-column-start: 1;
+		font-size: var(--text-xl);
+		color: var(--gray-0);
+	}
+
+	.content {
+		grid-column: 2 / 4;
+	}
+
+	.content :global(a) {
+		text-decoration: 1px solid underline transparent;
+		text-underline-offset: 0.25em;
+		transition: text-decoration-color var(--theme-transition);
+	}
+
+	.content :global(a:hover),
+	.content :global(a:focus) {
+		text-decoration-color: currentColor;
+	}
+
+	@media (min-width: 50em) {
+		.about {
+			display: grid;
+			grid-template-columns: 1fr 60% 1fr;
+		}
+
+		.about > :global(:first-child) {
+			grid-column-start: 2;
+		}
+
+		section {
+			display: contents;
+			font-size: var(--text-lg);
+		}
+	}
+</style>

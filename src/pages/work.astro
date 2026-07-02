@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import ContactCTA from '../components/ContactCTA.astro';
+import Grid from '../components/Grid.astro';
+import Hero from '../components/Hero.astro';
+import PortfolioPreview from '../components/PortfolioPreview.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const projects = (await getCollection('work')).sort(
+	(a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
+);
+---
+
+<BaseLayout title="My Work | GreeDev" description="GreeDev's portfolio projects">
+	<div class="stack gap-20">
+		<main class="wrapper stack gap-8">
+			<Hero
+				title="My Work"
+				tagline="See my most recent projects below."
+				align="start"
+				i18nTitle="work.page.title"
+				i18nTagline="work.page.tagline"
+			/>
+			{
+				projects.length > 0 ? (
+					<Grid variant="offset">
+						{projects.map((project) => (
+							<li>
+								<PortfolioPreview project={project} />
+							</li>
+						))}
+					</Grid>
+				) : (
+					<p class="empty-projects">Coming soon</p>
+				)
+			}
+		</main>
+		<ContactCTA />
+	</div>
+</BaseLayout>
+
+<style>
+	.empty-projects {
+		text-align: center;
+		color: var(--gray-500);
+		font-size: var(--text-lg);
+		padding: 3rem 0;
+	}
+</style>
