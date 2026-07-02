@@ -43,6 +43,15 @@ export const translations: Record<string, Record<string, string>> = {
 		'footer.copyright': '© {year} Agustín Burgos',
 		'cta.heading': 'Interested in working together?',
 		'cta.button': 'Send Me a Message',
+
+		'contact.name': 'Name',
+		'contact.email': 'Email',
+		'contact.message': 'Message',
+		'contact.send': 'Send Message',
+		'contact.sending': 'Sending...',
+		'contact.success': 'Message sent! I\'ll get back to you soon.',
+		'contact.error': 'Something went wrong. Please try again.',
+
 		'lang.en': 'English',
 		'lang.es': 'Español',
 

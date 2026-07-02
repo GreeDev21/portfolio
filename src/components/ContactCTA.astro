@@ -1,25 +1,98 @@
 ---
-import CallToAction from './CallToAction.astro';
-import Icon from './Icon.astro';
 ---
 
 <aside>
 	<h2 data-i18n="cta.heading">Interested in working together?</h2>
-	<CallToAction href="mailto:me@example.com">
-		<span data-i18n="cta.button">Send Me a Message</span>
-		<Icon icon="paper-plane-tilt" size="1.2em" />
-	</CallToAction>
+
+	<contact-form>
+		<form id="contact-form" novalidate>
+			<div class="form-field">
+				<label for="name" data-i18n="contact.name">Name</label>
+				<input type="text" id="name" name="name" required maxlength="100" />
+			</div>
+
+			<div class="form-field">
+				<label for="email" data-i18n="contact.email">Email</label>
+				<input type="email" id="email" name="email" required maxlength="200" />
+			</div>
+
+			<div class="form-field">
+				<label for="message" data-i18n="contact.message">Message</label>
+				<textarea id="message" name="message" required maxlength="5000" rows="5"></textarea>
+			</div>
+
+			<button type="submit" class="submit-btn">
+				<span class="btn-text" data-i18n="contact.send">Send Message</span>
+				<span class="btn-sending" hidden data-i18n="contact.sending">Sending...</span>
+			</button>
+
+			<p class="form-feedback success" hidden data-i18n="contact.success">Message sent! I'll get back to you soon.</p>
+			<p class="form-feedback error" hidden data-i18n="contact.error">Something went wrong. Please try again.</p>
+		</form>
+	</contact-form>
 </aside>
+
+<script>
+	class ContactForm extends HTMLElement {
+		connectedCallback() {
+			const form = this.querySelector('form')!;
+			const button = form.querySelector('.submit-btn') as HTMLButtonElement;
+			const btnText = form.querySelector('.btn-text') as HTMLElement;
+			const btnSending = form.querySelector('.btn-sending') as HTMLElement;
+			const feedbackSuccess = form.querySelector('.form-feedback.success') as HTMLElement;
+			const feedbackError = form.querySelector('.form-feedback.error') as HTMLElement;
+
+			form.addEventListener('submit', async (e) => {
+				e.preventDefault();
+
+				// Disable form
+				button.disabled = true;
+				btnText.hidden = true;
+				btnSending.hidden = false;
+				feedbackSuccess.hidden = true;
+				feedbackError.hidden = true;
+
+				const data = {
+					name: (form.querySelector('#name') as HTMLInputElement).value,
+					email: (form.querySelector('#email') as HTMLInputElement).value,
+					message: (form.querySelector('#message') as HTMLTextAreaElement).value,
+				};
+
+				try {
+					const res = await fetch('/api/contact', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify(data),
+					});
+
+					if (!res.ok) throw new Error('Failed');
+
+					form.reset();
+					feedbackSuccess.hidden = false;
+					feedbackError.hidden = true;
+				} catch {
+					feedbackSuccess.hidden = true;
+					feedbackError.hidden = false;
+				} finally {
+					button.disabled = false;
+					btnText.hidden = false;
+					btnSending.hidden = true;
+				}
+			});
+		}
+	}
+	customElements.define('contact-form', ContactForm);
+</script>
 
 <style>
 	aside {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 3rem;
+		gap: 2rem;
 		border-top: 1px solid var(--gray-800);
 		border-bottom: 1px solid var(--gray-800);
-		padding: 5rem 1.5rem;
+		padding: 4rem 1.5rem;
 		background-color: var(--gray-999_40);
 		box-shadow: var(--shadow-sm);
 	}
@@ -30,17 +103,99 @@ import Icon from './Icon.astro';
 		max-width: 15ch;
 	}
 
+	form {
+		width: 100%;
+		max-width: 32rem;
+		display: grid;
+		gap: 1.25rem;
+	}
+
+	.form-field {
+		display: grid;
+		gap: 0.4rem;
+	}
+
+	.form-field label {
+		font-size: var(--text-sm);
+		color: var(--gray-300);
+		font-weight: 500;
+	}
+
+	.form-field input,
+	.form-field textarea {
+		padding: 0.75rem 1rem;
+		border: 1px solid var(--gray-800);
+		border-radius: 0.75rem;
+		background-color: var(--gray-999);
+		color: var(--gray-100);
+		font-family: inherit;
+		font-size: var(--text-sm);
+		transition: border-color var(--theme-transition);
+		outline: none;
+	}
+
+	.form-field input:focus,
+	.form-field textarea:focus {
+		border-color: var(--accent-regular);
+	}
+
+	.form-field textarea {
+		resize: vertical;
+		min-height: 6rem;
+	}
+
+	.submit-btn {
+		justify-self: start;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.75rem 1.5rem;
+		border: none;
+		border-radius: 999rem;
+		background: var(--accent-regular);
+		color: var(--accent-text-over);
+		font-family: var(--font-brand);
+		font-size: var(--text-sm);
+		font-weight: 600;
+		cursor: pointer;
+		transition: opacity var(--theme-transition);
+	}
+
+	.submit-btn:hover:not(:disabled) {
+		opacity: 0.85;
+	}
+
+	.submit-btn:disabled {
+		cursor: not-allowed;
+		opacity: 0.6;
+	}
+
+	.form-feedback {
+		font-size: var(--text-sm);
+		margin: 0;
+	}
+
+	.form-feedback.success {
+		color: var(--accent-regular);
+	}
+
+	.form-feedback.error {
+		color: #e5484d;
+	}
+
 	@media (min-width: 50em) {
 		aside {
-			padding: 7.5rem;
+			padding: 5rem 7.5rem;
 			flex-direction: row;
 			flex-wrap: wrap;
-			justify-content: space-between;
+			justify-content: center;
+			gap: 3rem;
 		}
 
 		h2 {
 			font-size: var(--text-3xl);
-			text-align: left;
+			text-align: center;
+			flex: 0 0 100%;
 		}
 	}
 </style>
