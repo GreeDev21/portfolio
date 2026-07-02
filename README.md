@@ -1,30 +1,72 @@
-# Astro Starter Kit: Portfolio
+# GreeDev — Portfolio
 
-```sh
-npm create astro@latest -- --template portfolio
+Personal portfolio of **Agustín Burgos**, a Frontend Designer & Developer.
+
+Built with [Astro](https://astro.build), deployed on [Vercel](https://vercel.com), with a functional contact form powered by [Resend](https://resend.com).
+
+## Tech Stack
+
+- **Framework:** [Astro](https://astro.build) v7 (SSR with `@astrojs/vercel`)
+- **Deploy:** [Vercel](https://vercel.com) — Serverless functions
+- **Email:** [Resend](https://resend.com) — Contact form delivery
+- **i18n:** Custom EN/ES translation system with `data-i18n` attributes
+- **Styling:** CSS custom properties, scoped Astro styles, responsive design
+
+## Features
+
+- Contact form with modal dialog (`<dialog>` native element)
+- Server-side email sending via Resend API
+- Bilingual (English / Spanish) with client-side language toggle
+- Dark mode only (forced `theme-dark` at HTML level)
+- Fully responsive (mobile-first)
+- Social links: GitHub, LinkedIn, Instagram
+
+## Getting Started
+
+```bash
+# Install dependencies
+npm install
+
+# Copy environment variables and fill them in
+cp .env.example .env
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/portfolio)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/portfolio)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/portfolio/devcontainer.json)
+Required environment variables (see `.env.example`):
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+| Variable         | Description                            |
+| ---------------- | -------------------------------------- |
+| `RESEND_API_KEY` | Your Resend API key                    |
+| `FROM_EMAIL`     | Sender email (use `onboarding@resend.dev` for dev) |
+| `TO_EMAIL`       | Where contact messages arrive          |
 
-![portfolio](https://user-images.githubusercontent.com/357379/210779178-a98f0fb7-6b1a-4068-894c-8e1403e26654.jpg)
+```bash
+# Start dev server
+npm run dev
 
-## 🧞 Commands
+# Build for production
+npm run build
 
-All commands are run from the root of the project, from a terminal:
+# Preview production build
+npm run preview
+```
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Project Structure
 
-## 👀 Want to learn more?
+```
+src/
+├── components/     # Astro components (Nav, Hero, ContactCTA, etc.)
+├── layouts/        # BaseLayout with i18n script and theme
+├── pages/          # Routes: index, work, about
+│   └── api/        # API route: /api/contact
+├── i18n/           # Translation files (EN/ES)
+├── styles/         # Global CSS and variables
+└── content/        # Work projects (Markdown)
+```
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Deployment
+
+The project is configured for Vercel with the `@astrojs/vercel` adapter (serverless mode). Connect the GitHub repo to Vercel and add the environment variables in the Vercel dashboard.
+
+---
+
+Built with ❤️ by [GreeDev](https://github.com/GreeDev21)
