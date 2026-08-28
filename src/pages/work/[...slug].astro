@@ -1,0 +1,123 @@
+---
+import { type CollectionEntry, getCollection, render } from 'astro:content';
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+import ContactCTA from '../../components/ContactCTA.astro';
+import Hero from '../../components/Hero.astro';
+import Icon from '../../components/Icon.astro';
+
+interface Props {
+	entry: CollectionEntry<'work'>;
+}
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+	const work = await getCollection('work');
+	return work.map((entry) => ({
+		params: { slug: entry.id },
+		props: { entry },
+	}));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<BaseLayout title={`${entry.data.title} | GreeDev`} description={entry.data.description}>
+	<div class="stack gap-20">
+		<div class="stack gap-15">
+			<main class="wrapper">
+				<a class="back-link" href="/work/">
+					<Icon icon="arrow-left" />
+					<span data-i18n="work.detail.back">Work</span>
+				</a>
+				<Hero 
+					title={entry.data.title} 
+					tagline={entry.data.description} 
+					align="start"
+					i18nTitle={`work.${entry.id}.title`}
+					i18nTagline={`work.${entry.id}.description`}
+				/>
+				<div class="content-wrapper">
+					<div class="content">
+						{entry.data.img && <img src={entry.data.img} alt={entry.data.img_alt || ''} />}
+						<div class="markdown-body">
+							<Content />
+						</div>
+					</div>
+				</div>
+			</main>
+		</div>
+		<ContactCTA />
+	</div>
+</BaseLayout>
+
+<style>
+	.back-link {
+		display: none;
+	}
+
+	.content-wrapper {
+		margin-top: 2.5rem;
+	}
+
+	.content {
+		max-width: 65ch;
+		margin-inline: auto;
+		display: flex;
+		flex-direction: column;
+		gap: 2.5rem;
+	}
+
+	.content img {
+		border-radius: 1.5rem;
+		box-shadow: var(--shadow-sm);
+		background: var(--gradient-subtle);
+		border: 1px solid var(--gray-800);
+	}
+
+	.markdown-body {
+		line-height: 1.8;
+		color: var(--gray-300);
+	}
+
+	.markdown-body :global(h2),
+	.markdown-body :global(h3) {
+		color: var(--gray-0);
+		margin-top: 2.5rem;
+		margin-bottom: 1rem;
+		font-weight: 600;
+	}
+
+	.markdown-body :global(p) {
+		margin-bottom: 1.5rem;
+	}
+
+	.markdown-body :global(ul) {
+		padding-left: 1.5rem;
+		margin-bottom: 1.5rem;
+		list-style-type: disc;
+	}
+
+	.markdown-body :global(li) {
+		margin-bottom: 0.5rem;
+	}
+
+	@media (min-width: 50em) {
+		.back-link {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.5rem;
+			color: var(--gray-300);
+			text-decoration: none;
+			font-size: var(--text-md);
+			margin-bottom: 2rem;
+		}
+
+		.back-link:hover {
+			color: var(--accent-light);
+		}
+	}
+</style>
