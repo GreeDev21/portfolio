@@ -5,6 +5,7 @@ publishDate: "2026-08-27"
 tags: ["FastAPI", "SQLite", "SQLModel", "Vanilla JS", "Clean Architecture"]
 img: "/assets/lazy-list.png"
 img_alt: "LazyList claymorphic library catalog dashboard showing media covers"
+github: "https://github.com/GreeDev21/LazyList"
 ---
 
 <p data-i18n="work.lazylist.intro">LazyList is a minimalist and tactile web application designed to catalog and manage your personal library of games, movies, series, books, and web resources in one place.</p>

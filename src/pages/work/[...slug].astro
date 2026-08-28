@@ -39,7 +39,16 @@ const { Content } = await render(entry);
 					align="start"
 					i18nTitle={`work.${entry.id}.title`}
 					i18nTagline={`work.${entry.id}.description`}
-				/>
+				>
+					{entry.data.github && (
+						<div class="github-link-wrapper">
+							<a class="github-link" href={entry.data.github} target="_blank" rel="noopener noreferrer">
+								<Icon icon="github-logo" size="1.2em" />
+								<span data-i18n="work.detail.github">GitHub Repository</span>
+							</a>
+						</div>
+					)}
+				</Hero>
 				<div class="content-wrapper">
 					<div class="content">
 						{entry.data.img && <img src={entry.data.img} alt={entry.data.img_alt || ''} />}
@@ -57,6 +66,30 @@ const { Content } = await render(entry);
 <style>
 	.back-link {
 		display: none;
+	}
+
+	.github-link-wrapper {
+		margin-top: 1rem;
+	}
+
+	.github-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.5rem 1.25rem;
+		color: var(--gray-300);
+		background: var(--gray-900);
+		border: 1px solid var(--gray-800);
+		border-radius: 999rem;
+		text-decoration: none;
+		font-size: var(--text-sm);
+		transition: background-color var(--theme-transition), color var(--theme-transition), border-color var(--theme-transition);
+	}
+
+	.github-link:hover {
+		color: var(--accent-light);
+		background-color: var(--gray-800);
+		border-color: var(--accent-light);
 	}
 
 	.content-wrapper {
